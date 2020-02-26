@@ -43,7 +43,7 @@ public class SnakeGame {
                 exhaustiveChecks++;
                 if (game[i][j]){
                     length++;
-                    if (neighbors(game,i,j) == 1 && (game[i] != game[headPosition[0]]) && (game[i] != game[headPosition[0]])  ){
+                    if (neighbors(i,j) == 1 && (game[i] != game[headPosition[0]]) && (game[i] != game[headPosition[0]])  ){
                         tailRow = i;
                         tailCol = j;
                     }
@@ -62,25 +62,25 @@ public class SnakeGame {
 //        return result;
 //    }
     //---------------------------------------------------------------------------------------------------------------
-    private int [] findTailRecursive(int [] currentPosition, int [] previousPosition){
-        int [] temp = new int[2];
-        int [] next = new int[2];
-        temp[0] = currentPosition[0];
-        temp[1] = currentPosition[1];
-
-        neighborsRec(game, currentPosition[0], currentPosition[1], previousPosition, next);
-        length++;
-
-        currentPosition[0] = next[0];
-        currentPosition[1] = next [1];
-
-        previousPosition [0] = temp[0];
-        previousPosition [1] = temp[1];
-
-        findTailRecursive(currentPosition,previousPosition);
-
-        return result = new int [] {currentPosition[0],currentPosition[1],length};
-    }
+//    private int [] findTailRecursive(int [] currentPosition, int [] previousPosition){
+//        int [] temp = new int[2];
+//        int [] next = new int[2];
+//        temp[0] = currentPosition[0];
+//        temp[1] = currentPosition[1];
+//
+//        neighborsRec(game, currentPosition[0], currentPosition[1], previousPosition, next);
+//        length++;
+//
+//        currentPosition[0] = next[0];
+//        currentPosition[1] = next [1];
+//
+//        previousPosition [0] = temp[0];
+//        previousPosition [1] = temp[1];
+//
+//        findTailRecursive(currentPosition,previousPosition);
+//
+//        return result = new int [] {currentPosition[0],currentPosition[1],length};
+//    }
     //---------------------------------------------------------------------------------------------------------------
     public void print(){
         System.out.println("Head position: (" + headPosition[0] + ", " + headPosition[1] + ")");
@@ -102,142 +102,22 @@ public class SnakeGame {
         return recursiveChecks;
     }
     //---------------------------------------------------------------------------------------------------------------
-    public int neighbors(boolean [][] game, int row, int col){
-//        boolean right = (game[row][col +1]);
-//        boolean left = (game[row][col -1]);
-//        boolean down = (game[row + 1][col]);
-//        boolean up = (game[row -1][col]);
+    public int neighbors(int row, int col){
 
         int neighbors = 0;
 
-        if(row == 0 && col == 0){
-            if(game[row][col +1])
+        for(int i = -1; i<=1; i = i + 2){
+            if(row + i > 0  && row + i < game.length && game[row + i][col]) {
                 neighbors++;
-            if(game[row + 1][col])
+            }
+            if(col + i > 0  && col + i < game.length && game[row][col + i]) {
                 neighbors++;
-        }
-
-        if(row == game.length-1 && col == game.length -1){
-            if((game[row][col -1]))
-                neighbors++;
-            if(game[row -1][col])
-                neighbors++;
-        }
-
-        if(row == 0 && col != game.length-1){
-            if((game[row][col -1]))
-                neighbors++;
-            if(game[row][col +1])
-                neighbors++;
-            if(game[row + 1][col])
-                neighbors++;
-        }
-        if(col == 0 && row != game.length-1 ){
-            if(game[row][col +1])
-                neighbors++;
-            if((game[row - 1][col]))
-                neighbors++;
-            if(game[row + 1][col])
-                neighbors++;
-        }
-
-        if(row != 0 && row != game.length-1 && col != 0 && col!= game.length-1){
-            if(game[row][col +1])
-                neighbors++;
-            if((game[row][col -1]))
-                neighbors++;
-            if(game[row + 1][col])
-                neighbors++;
-            if(game[row -1][col])
-                neighbors++;
+            }
         }
         return neighbors;
     }
     //---------------------------------------------------------------------------------------------------------------
-    public int [] neighborsRec(boolean [][] game, int row, int col, int [] prev, int [] next){
-//        boolean right = (game[row][col +1]);
-//        boolean left = (game[row][col -1]);
-//        boolean down = (game[row + 1][col]);
-//        boolean up = (game[row -1][col]);
 
-
-
-        if(row == 0 && col == 0){
-            if(game[row][col +1] && (game[row] != game[prev[0]]) && (game[col+1] != game[prev[1]])){
-                next[0] = row;
-                next[1] = col +1;
-            }
-            if(game[row + 1][col] && (game[row + 1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row + 1;
-                next[1] = col;
-            }
-
-        }
-
-        if(row == game.length-1 && col == game.length -1){
-            if(game[row][col -1] && (game[row] != game[prev[0]]) && (game[col-1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col -1;
-            }
-
-            if(game[row -1][col] && (game[row-1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row - 1;
-                next[1] = col;
-            }
-        }
-
-        if(row == 0 && col != game.length-1){
-            if((game[row][col -1]) && (game[row] != game[prev[0]]) && (game[col-1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col -1;
-            }
-            if(game[row][col +1] && (game[row] != game[prev[0]]) && (game[col+1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col + 1;
-            }
-            if(game[row + 1][col] && (game[row+1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row + 1;
-                next[1] = col;
-            }
-        }
-        if(col == 0 && row != game.length-1 ){
-            if(game[row][col +1] && (game[row] != game[prev[0]]) && (game[col+1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col + 1;
-            }
-
-            if(game[row -1][col] && (game[row-1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row - 1;
-                next[1] = col;
-            }
-            if(game[row + 1][col] && (game[row+1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row + 1;
-                next[1] = col;
-            }
-
-        }
-
-        if(row != 0 && row != game.length-1 && col != 0 && col!= game.length-1){
-            if(game[row][col +1] && (game[row] != game[prev[0]]) && (game[col+1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col + 1;
-            }
-
-            if((game[row][col -1]) && (game[row] != game[prev[0]]) && (game[col-1] != game[prev[1]])){
-                next[0]= row;
-                next[1] = col -1;
-            }
-            if(game[row + 1][col] && (game[row+1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row + 1;
-                next[1] = col;
-            }
-            if(game[row -1][col] && (game[row-1] != game[prev[0]]) && (game[col] != game[prev[1]])){
-                next[0]= row -1;
-                next[1] = col;
-            }
-        }
-        return next;
-    }
 
 
 
