@@ -9,9 +9,11 @@ public class SnakeGameTester {
                                             {true, false, false, false, false, false, false, false},
                                             {true, false, false, false, false, false, false, false},};
         SnakeGame game = new SnakeGame(test,7,0);
-        game.findTailExhaustive();
-        game.findTailExhaustive();
-        game.print();
+//        game.findTailExhaustive();
+//        game.findTailExhaustive();
+//        game.print();
+          game.findTailRecursive();
+          game.print();
 
 
     }

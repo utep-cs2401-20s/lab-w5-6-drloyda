@@ -4,6 +4,7 @@ public class SnakeGame {
     private static int exhaustiveChecks;
     private static int recursiveChecks;
     private int [] result; // i made to print the result
+    private int [] resultRec;
 
     //Default constructor assigns game board of one element
     SnakeGame(){
@@ -54,39 +55,62 @@ public class SnakeGame {
         return result;
     }
     //---------------------------------------------------------------------------------------------------------------
-//    public int [] findTailRecursive(){
-//       // result = new int [] {tailRow,tailCol,length};
-//
-//        findTailRecursive(headPosition,headPosition);
-//
-//        return result;
-//    }
+    public int [] findTailRecursive(){
+       // result = new int [] {tailRow,tailCol,length};
+        resetCounters();
+
+        return findTailRecursive(headPosition,headPosition);
+    }
     //---------------------------------------------------------------------------------------------------------------
-//    private int [] findTailRecursive(int [] currentPosition, int [] previousPosition){
-//        int [] temp = new int[2];
-//        int [] next = new int[2];
-//        temp[0] = currentPosition[0];
-//        temp[1] = currentPosition[1];
-//
-//        neighborsRec(game, currentPosition[0], currentPosition[1], previousPosition, next);
-//        length++;
-//
-//        currentPosition[0] = next[0];
-//        currentPosition[1] = next [1];
-//
-//        previousPosition [0] = temp[0];
-//        previousPosition [1] = temp[1];
-//
-//        findTailRecursive(currentPosition,previousPosition);
-//
-//        return result = new int [] {currentPosition[0],currentPosition[1],length};
-//    }
+    private int [] findTailRecursive(int [] currentPosition, int [] previousPosition){
+        int [] next = new int[2];
+        int neighbors = 0;
+
+        for(int i = -1; i<=1; i = i + 2){
+
+            if(currentPosition[0] + i > 0  && currentPosition[0] + i < game.length && game[currentPosition[0] + i][currentPosition[1]]) {
+                if(currentPosition[0] + i != previousPosition[0]){
+                    next[0] = currentPosition[0] + i;
+                    next[1] = currentPosition[1];
+                }
+
+            }
+            if(currentPosition[1] + i > 0  && currentPosition[1] + i < game.length && game[currentPosition[0]][currentPosition[1] + i]) {
+                if(currentPosition[1] + i != previousPosition[1]){
+                    next[0] = currentPosition[0];
+                    next[1] = currentPosition[1] + i;
+                }
+            }if(next[0] == 0 && next[1] ==0){
+                return resultRec = new int [] {currentPosition[0], currentPosition[1]};
+            }
+
+
+        }
+
+
+
+        previousPosition [0] = currentPosition[0];
+        previousPosition [1] = currentPosition[1];
+//        System.out.print(previousPosition[0]);
+//        System.out.println(previousPosition[1]);
+
+        currentPosition[0] = next[0];
+        currentPosition[1] = next [1];
+//        System.out.print(next[0]);
+//        System.out.println(next[1]);
+
+
+        findTailRecursive(currentPosition,previousPosition);
+
+        return resultRec = new int []{currentPosition[0], currentPosition[1]};
+    }
     //---------------------------------------------------------------------------------------------------------------
     public void print(){
-        System.out.println("Head position: (" + headPosition[0] + ", " + headPosition[1] + ")");
-        System.out.println("Tail position: (" + result[0] + ", " + result[1] + ")");
-        System.out.println("Length: " + result[2]);
-        System.out.println("Exhaustive Checks: " + exhaustiveChecks);
+//        System.out.println("Head position: (" + headPosition[0] + ", " + headPosition[1] + ")");
+//        System.out.println("Tail position: (" + result[0] + ", " + result[1] + ")");
+//        System.out.println("Length: " + result[2]);
+//        System.out.println("Exhaustive Checks: " + exhaustiveChecks);
+          System.out.println(resultRec[0] +"," + resultRec[1]);
     }
     //---------------------------------------------------------------------------------------------------------------
     private void resetCounters(){
